@@ -11,20 +11,51 @@ socket.connect(("127.0.0.1",PORT))
 #print("A")
 rutAux = ""
 
+def limpiar(var):
+        var = str(var)
+        var = var.replace("[","")
+        var = var.replace("(","")
+        var = var.replace("]","")
+        var = var.replace(")","")
+        var = var.replace(",","")
+        return var
+
 def enviar ():
         #print("A")
     
         while True:
 
+                #email
+                email1 = "elipareja1998@gmail.com"
+                email2 = email1 + " "
+                temp2= llenado(len(email2+'cread'))
+                mesj= temp2+ 'cread' + email2
+                socket.send(bytes(mesj, 'utf-8'))
+
                 # se debe estar con sesión iniciada de entes , luego mover esto al if de op 1
                 #socket.send(bytes('00010getsvadddi','utf-8'))
 
-                print("perros disponibles")
+                #ID USUARIO:
+                consulta0= f"SELECT idusuario FROM usuario WHERE email='{email1}';"
+                idusuario1 = consultar(consulta0)
+                idusuario1 = limpiar(idusuario1)
+                
 
-                a = consultar("SELECT * FROM mascota;")
-                print(a)
+                #RELACION USUARIO PERRO
+                consulta1= f"SELECT idmascota FROM usuariomascota where idusuario = '{idusuario1}';"
+                idmascota1 = consultar(consulta1)
+                
+                
+                #PERROS DISPONIBLES
+                print("Sus perros ingresados: ")
+                for gg in idmascota1:
+                        gg = limpiar(gg)
+                        
+                        a = consultar(f"SELECT nombre, edad, raza, descripcion, idmascota FROM mascota where idmascota = '{gg}';")
+                        print(a)
 
                 #ingreso de datos
+                print("ingrese los siguientes datos del perrito")
                 nombre = input("Escribir nombre: ")
                 edad = input("Escribir edad en meses: ")
                 raza = input("Escribir raza o callejero: ")
@@ -32,8 +63,8 @@ def enviar ():
 
                 #envio de datos
                 datos = nombre + " " + edad + " " + raza + " " + descripcion
-                temp = llenado(len(datos+'addco'))
-                mensaje = temp + 'addco' + datos
+                temp = llenado(len(datos+'cread'))
+                mensaje = temp + 'cread' + datos
                 socket.send(bytes(mensaje,'utf-8'))
                 #print(mensaje)
 

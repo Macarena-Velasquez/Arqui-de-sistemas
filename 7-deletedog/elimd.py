@@ -17,23 +17,20 @@ def recibir(sock, addr):
     while True:
 
         datos = sock.recv(4096)
-        if datos.decode('utf-8').find('addco'):
+        if datos.decode('utf-8').find('elimd'):
             
             #decodificar el mensaje
             datos = datos[10:]
             target = datos.decode()
             data = target.split()
-            #print(data)
-
-
-	
-        consulta = f"DELETE FROM mascota WHERE idmascota='{data[0]}';"
-	
-
-        #consulta = f"INSERT INTO perros (nombre, edad, raza, descripcion) VALUES ('{data[0]}','{data[1]}', '{data[2]}','{data[3]}');"
-
-        
+            
+        #ELIMINAR EN MASCOTAS
+        consulta = f"DELETE FROM mascota WHERE idmascota='{data[0]}';" 
         respuesta = modificar(consulta)
+
+        #ELIMINAR EN USUARIOPERRO
+        consulta1 = f"DELETE FROM usuariomascota WHERE idmascota='{data[0]}';"
+        respuesta1 = modificar(consulta1)
         
         if respuesta == None:
             menj = "perro eliminado con exito"
@@ -52,8 +49,7 @@ def recibir(sock, addr):
 
         #crear mensaje de respuesta
         print("envia3")
-        a = consultar("SELECT * FROM mascota;")
-        print(a)
+
         
     sock.close()
 while True:
