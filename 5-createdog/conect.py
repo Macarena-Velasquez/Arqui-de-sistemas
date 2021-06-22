@@ -45,6 +45,6 @@ conexion()
 print("consulta")
 
 #y = modificar("insert into perros(nombre, edad, raza, descripcion) values('{data[3]}','{data[2]}', '{data[1]}','{data[0]}')")
-x = consultar("select * from mascota")
+#x = consultar("SELECT idmascota FROM mascota where nombre='eli';")
 
-print(x)
+#print(x[0])
